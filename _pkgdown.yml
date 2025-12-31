@@ -54,3 +54,6 @@ home:
   description: >
     An R package for fetching and analyzing school enrollment data
     from the Mississippi Department of Education.
+  links:
+  - text: "Part of the 50 State Schooldata Family"
+    href: https://github.com/almartin82/njschooldata
