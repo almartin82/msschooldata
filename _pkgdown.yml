@@ -1,0 +1,56 @@
+url: https://almartin82.github.io/msschooldata/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left:
+      - intro
+      - reference
+      - articles
+      - news
+    right:
+      - search
+      - github
+  components:
+    github:
+      icon: fab fa-github
+      href: https://github.com/almartin82/msschooldata
+
+reference:
+  - title: "Fetch Data"
+    desc: "Functions for downloading enrollment data from MDE"
+    contents:
+      - fetch_enr
+      - fetch_enr_multi
+      - get_available_years
+
+  - title: "Transform Data"
+    desc: "Functions for transforming and tidying enrollment data"
+    contents:
+      - tidy_enr
+      - id_enr_aggs
+      - enr_grade_aggs
+
+  - title: "Caching"
+    desc: "Functions for managing cached data"
+    contents:
+      - cache_status
+      - clear_cache
+
+  - title: "Utilities"
+    desc: "Helper functions"
+    contents:
+      - starts_with("%")
+
+articles:
+  - title: "Getting Started"
+    contents:
+      - msschooldata
+
+home:
+  title: "msschooldata: Mississippi School Enrollment Data"
+  description: >
+    An R package for fetching and analyzing school enrollment data
+    from the Mississippi Department of Education.

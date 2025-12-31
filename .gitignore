@@ -1,0 +1,35 @@
+# R package build files
+*.Rproj.user
+*.Rhistory
+*.RData
+*.Ruserdata
+*.rds
+
+# Package documentation
+docs/
+doc/
+Meta/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.Rproj.user/
+*.Rproj
+
+# Temp files
+*.tmp
+*~
+
+# Test coverage
+covr/
+codecov.yml
+
+# pkgdown
+pkgdown/
+
+# vignette cache
+vignettes/*.html
+vignettes/*.R
+inst/doc/
