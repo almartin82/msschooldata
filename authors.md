@@ -9,12 +9,11 @@
 Source:
 [`DESCRIPTION`](https://github.com/almartin82/msschooldata/blob/main/DESCRIPTION)
 
-Martin A (2026). *msschooldata: Fetch and Process Mississippi School
-Data*. R package version 0.1.0,
-<https://almartin82.github.io/msschooldata>.
+Martin A (2026). *msschooldata: Mississippi School Data*. R package
+version 0.1.0, <https://almartin82.github.io/msschooldata>.
 
     @Manual{,
-      title = {msschooldata: Fetch and Process Mississippi School Data},
+      title = {msschooldata: Mississippi School Data},
       author = {Al Martin},
       year = {2026},
       note = {R package version 0.1.0},
