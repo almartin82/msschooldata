@@ -44,11 +44,6 @@ reference:
     contents:
       - starts_with("%")
 
-articles:
-  - title: "Getting Started"
-    contents:
-      - msschooldata
-
 home:
   title: "msschooldata: Mississippi School Enrollment Data"
   description: >
