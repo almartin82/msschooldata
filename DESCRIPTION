@@ -1,14 +1,10 @@
 Package: msschooldata
-Title: Fetch and Process Mississippi School Data
+Title: Mississippi School Data
 Version: 0.1.0
 Authors@R:
     person("Al", "Martin", , "almartin@example.com", role = c("aut", "cre"))
-Description: Downloads and processes school data from the Mississippi Department
-    of Education (MDE). Provides functions for fetching enrollment data from
-    the MDE reporting system and transforming it into tidy format for analysis.
-    Data is sourced from the Mississippi Student Information System (MSIS)
-    and includes enrollment counts by grade, race/ethnicity, gender, and
-    special populations from 2006 to present.
+Description: A simple, consistent interface for accessing Mississippi
+    school data in R.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
