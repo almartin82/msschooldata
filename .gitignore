@@ -33,3 +33,4 @@ pkgdown/
 vignettes/*.html
 vignettes/*.R
 inst/doc/
+..Rcheck/
