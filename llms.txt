@@ -4,8 +4,8 @@
 **[Getting
 Started](https://almartin82.github.io/msschooldata/articles/quickstart.html)**
 
-Fetch and analyze Mississippi public school enrollment data from the
-Mississippi Department of Education (MDE).
+Fetch and analyze Mississippi school enrollment data from the
+Mississippi Department of Education (MDE) in R or Python.
 
 ## What can you find with msschooldata?
 
@@ -222,6 +222,8 @@ remotes::install_github("almartin82/msschooldata")
 
 ## Quick start
 
+### R
+
 ``` r
 library(msschooldata)
 library(dplyr)
@@ -247,6 +249,43 @@ enr_2025 %>%
   filter(grepl("Jackson Public", district_name), grade_level == "TOTAL",
          subgroup %in% c("white", "black", "hispanic", "asian")) %>%
   select(subgroup, n_students, pct)
+```
+
+### Python
+
+``` python
+import pymsschooldata as ms
+
+# Check available years
+years = ms.get_available_years()
+print(f"Data available from {years['min_year']} to {years['max_year']}")
+
+# Fetch one year
+enr_2025 = ms.fetch_enr(2025)
+
+# Fetch multiple years
+enr_multi = ms.fetch_enr_multi([2020, 2021, 2022, 2023, 2024, 2025])
+
+# State totals
+state_total = enr_2025[
+    (enr_2025['is_state'] == True) &
+    (enr_2025['subgroup'] == 'total_enrollment') &
+    (enr_2025['grade_level'] == 'TOTAL')
+]
+
+# Largest districts
+districts = enr_2025[
+    (enr_2025['is_district'] == True) &
+    (enr_2025['subgroup'] == 'total_enrollment') &
+    (enr_2025['grade_level'] == 'TOTAL')
+].sort_values('n_students', ascending=False).head(15)
+
+# Jackson demographics
+jackson = enr_2025[
+    (enr_2025['district_name'].str.contains('Jackson Public', na=False)) &
+    (enr_2025['grade_level'] == 'TOTAL') &
+    (enr_2025['subgroup'].isin(['white', 'black', 'hispanic', 'asian']))
+][['subgroup', 'n_students', 'pct']]
 ```
 
 ## Data availability
