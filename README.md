@@ -35,8 +35,6 @@ enr_2025 %>%
   head(10)
 ```
 
-![Majority Black districts](man/figures/majority-black.png)
-
 ---
 
 ### 2. The Delta is emptying out
@@ -54,8 +52,6 @@ enr %>%
   select(end_year, district_name, n_students)
 ```
 
-![Delta decline](man/figures/delta-decline.png)
-
 ---
 
 ### 3. DeSoto County: Mississippi's growth engine
@@ -69,8 +65,6 @@ enr %>%
   select(end_year, n_students)
 ```
 
-![DeSoto growth](man/figures/desoto-growth.png)
-
 ---
 
 ### 4. Jackson Public Schools' steep decline
@@ -83,8 +77,6 @@ enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   select(end_year, n_students)
 ```
-
-![Jackson decline](man/figures/jackson-decline.png)
 
 ---
 
@@ -101,8 +93,6 @@ enr %>%
   select(end_year, n_students, pct)
 ```
 
-![Economic disadvantage](man/figures/econ-disadvantage.png)
-
 ---
 
 ### 6. COVID hit kindergarten hard
@@ -116,8 +106,6 @@ enr %>%
   select(end_year, grade_level, n_students)
 ```
 
-![COVID kindergarten](man/figures/covid-k.png)
-
 ---
 
 ### 7. Madison County: A suburban success
@@ -130,8 +118,6 @@ enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   select(end_year, n_students)
 ```
-
-![Madison growth](man/figures/madison-growth.png)
 
 ---
 
@@ -148,8 +134,6 @@ enr_2025 %>%
   head(10)
 ```
 
-![Hispanic growth](man/figures/hispanic-growth.png)
-
 ---
 
 ### 9. The Coast is holding steady
@@ -165,8 +149,6 @@ enr %>%
   select(end_year, district_name, n_students)
 ```
 
-![Gulf Coast](man/figures/coast-stable.png)
-
 ---
 
 ### 10. Charter schools are minimal
@@ -181,8 +163,6 @@ enr_2025 %>%
     n_schools = n()
   )
 ```
-
-![Charter enrollment](man/figures/charter-small.png)
 
 ---
 
