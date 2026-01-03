@@ -33,10 +33,6 @@ enr_2025 %>%
   head(10)
 ```
 
-![Majority Black districts](reference/figures/majority-black.png)
-
-Majority Black districts
-
 ------------------------------------------------------------------------
 
 ### 2. The Delta is emptying out
@@ -55,10 +51,6 @@ enr %>%
   select(end_year, district_name, n_students)
 ```
 
-![Delta decline](reference/figures/delta-decline.png)
-
-Delta decline
-
 ------------------------------------------------------------------------
 
 ### 3. DeSoto County: Mississippi’s growth engine
@@ -73,10 +65,6 @@ enr %>%
   select(end_year, n_students)
 ```
 
-![DeSoto growth](reference/figures/desoto-growth.png)
-
-DeSoto growth
-
 ------------------------------------------------------------------------
 
 ### 4. Jackson Public Schools’ steep decline
@@ -90,10 +78,6 @@ enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   select(end_year, n_students)
 ```
-
-![Jackson decline](reference/figures/jackson-decline.png)
-
-Jackson decline
 
 ------------------------------------------------------------------------
 
@@ -111,10 +95,6 @@ enr %>%
   select(end_year, n_students, pct)
 ```
 
-![Economic disadvantage](reference/figures/econ-disadvantage.png)
-
-Economic disadvantage
-
 ------------------------------------------------------------------------
 
 ### 6. COVID hit kindergarten hard
@@ -129,10 +109,6 @@ enr %>%
   select(end_year, grade_level, n_students)
 ```
 
-![COVID kindergarten](reference/figures/covid-k.png)
-
-COVID kindergarten
-
 ------------------------------------------------------------------------
 
 ### 7. Madison County: A suburban success
@@ -146,10 +122,6 @@ enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   select(end_year, n_students)
 ```
-
-![Madison growth](reference/figures/madison-growth.png)
-
-Madison growth
 
 ------------------------------------------------------------------------
 
@@ -167,10 +139,6 @@ enr_2025 %>%
   head(10)
 ```
 
-![Hispanic growth](reference/figures/hispanic-growth.png)
-
-Hispanic growth
-
 ------------------------------------------------------------------------
 
 ### 9. The Coast is holding steady
@@ -187,10 +155,6 @@ enr %>%
   select(end_year, district_name, n_students)
 ```
 
-![Gulf Coast](reference/figures/coast-stable.png)
-
-Gulf Coast
-
 ------------------------------------------------------------------------
 
 ### 10. Charter schools are minimal
@@ -206,10 +170,6 @@ enr_2025 %>%
     n_schools = n()
   )
 ```
-
-![Charter enrollment](reference/figures/charter-small.png)
-
-Charter enrollment
 
 ------------------------------------------------------------------------
 
