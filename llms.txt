@@ -9,7 +9,7 @@ Mississippi Department of Education (MDE) in R or Python.
 
 ## What can you find with msschooldata?
 
-**19 years of enrollment data (2007-2025).** 440,000 students. 144
+**18 years of enrollment data (2007-2024).** 440,000 students. 144
 districts. Here are ten stories hiding in the numbers:
 
 ------------------------------------------------------------------------
@@ -23,9 +23,9 @@ school districts, especially in the Delta region.
 library(msschooldata)
 library(dplyr)
 
-enr_2025 <- fetch_enr(2025)
+enr_2024 <- fetch_enr(2024)
 
-enr_2025 %>%
+enr_2024 %>%
   filter(is_district, subgroup == "black", grade_level == "TOTAL") %>%
   arrange(desc(pct)) %>%
   mutate(pct = round(pct * 100, 1)) %>%
@@ -45,7 +45,7 @@ Districts in the Mississippi Delta (Coahoma, Bolivar, Sunflower,
 Leflore) have lost 30-50% of students since 2007.
 
 ``` r
-enr <- fetch_enr_multi(c(2007, 2012, 2017, 2022, 2025))
+enr <- fetch_enr_multi(c(2007, 2012, 2017, 2022, 2024))
 
 delta <- c("Coahoma County", "Bolivar County", "Sunflower County", "Leflore County")
 
@@ -103,7 +103,7 @@ Over 75% of Mississippi students are economically disadvantaged - the
 highest rate in the nation.
 
 ``` r
-enr <- fetch_enr_multi(2015:2025)
+enr <- fetch_enr_multi(2015:2024)
 
 enr %>%
   filter(is_state, subgroup == "econ_disadv", grade_level == "TOTAL") %>%
@@ -159,7 +159,7 @@ From 2% to over 4% statewide, with some districts like Forest Municipal
 reaching 20%+.
 
 ``` r
-enr_2025 %>%
+enr_2024 %>%
   filter(is_district, subgroup == "hispanic", grade_level == "TOTAL") %>%
   arrange(desc(pct)) %>%
   mutate(pct = round(pct * 100, 1)) %>%
@@ -199,7 +199,7 @@ Mississippi has one of the smallest charter sectors - under 5,000
 students in the entire state.
 
 ``` r
-enr_2025 %>%
+enr_2024 %>%
   filter(is_charter, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   summarize(
     total_charter = sum(n_students, na.rm = TRUE),
@@ -229,23 +229,23 @@ library(msschooldata)
 library(dplyr)
 
 # Fetch one year
-enr_2025 <- fetch_enr(2025)
+enr_2024 <- fetch_enr(2024)
 
 # Fetch multiple years
-enr_multi <- fetch_enr_multi(2020:2025)
+enr_multi <- fetch_enr_multi(2020:2024)
 
 # State totals
-enr_2025 %>%
+enr_2024 %>%
   filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL")
 
 # Largest districts
-enr_2025 %>%
+enr_2024 %>%
   filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   arrange(desc(n_students)) %>%
   head(15)
 
 # Jackson demographics
-enr_2025 %>%
+enr_2024 %>%
   filter(grepl("Jackson Public", district_name), grade_level == "TOTAL",
          subgroup %in% c("white", "black", "hispanic", "asian")) %>%
   select(subgroup, n_students, pct)
@@ -261,30 +261,30 @@ years = ms.get_available_years()
 print(f"Data available from {years['min_year']} to {years['max_year']}")
 
 # Fetch one year
-enr_2025 = ms.fetch_enr(2025)
+enr_2024 = ms.fetch_enr(2024)
 
 # Fetch multiple years
-enr_multi = ms.fetch_enr_multi([2020, 2021, 2022, 2023, 2024, 2025])
+enr_multi = ms.fetch_enr_multi([2020, 2021, 2022, 2023, 2024])
 
 # State totals
-state_total = enr_2025[
-    (enr_2025['is_state'] == True) &
-    (enr_2025['subgroup'] == 'total_enrollment') &
-    (enr_2025['grade_level'] == 'TOTAL')
+state_total = enr_2024[
+    (enr_2024['is_state'] == True) &
+    (enr_2024['subgroup'] == 'total_enrollment') &
+    (enr_2024['grade_level'] == 'TOTAL')
 ]
 
 # Largest districts
-districts = enr_2025[
-    (enr_2025['is_district'] == True) &
-    (enr_2025['subgroup'] == 'total_enrollment') &
-    (enr_2025['grade_level'] == 'TOTAL')
+districts = enr_2024[
+    (enr_2024['is_district'] == True) &
+    (enr_2024['subgroup'] == 'total_enrollment') &
+    (enr_2024['grade_level'] == 'TOTAL')
 ].sort_values('n_students', ascending=False).head(15)
 
 # Jackson demographics
-jackson = enr_2025[
-    (enr_2025['district_name'].str.contains('Jackson Public', na=False)) &
-    (enr_2025['grade_level'] == 'TOTAL') &
-    (enr_2025['subgroup'].isin(['white', 'black', 'hispanic', 'asian']))
+jackson = enr_2024[
+    (enr_2024['district_name'].str.contains('Jackson Public', na=False)) &
+    (enr_2024['grade_level'] == 'TOTAL') &
+    (enr_2024['subgroup'].isin(['white', 'black', 'hispanic', 'asian']))
 ][['subgroup', 'n_students', 'pct']]
 ```
 
@@ -292,7 +292,7 @@ jackson = enr_2025[
 
 | Years         | Source                    | Notes                                 |
 |---------------|---------------------------|---------------------------------------|
-| **2007-2025** | MDE newreports.mdek12.org | Data from 2006-07 school year onwards |
+| **2007-2024** | MDE newreports.mdek12.org | Data from 2006-07 school year onwards |
 
 Data is sourced from the Mississippi Department of Education: - Primary
 Portal: <https://newreports.mdek12.org/> - Data Explorer:

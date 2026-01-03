@@ -57,7 +57,7 @@
 <div class="section level2">
 <h2 id="what-can-you-find-with-msschooldata">What can you find with msschooldata?<a class="anchor" aria-label="anchor" href="#what-can-you-find-with-msschooldata"></a>
 </h2>
-<p><strong>19 years of enrollment data (2007-2025).</strong> 440,000 students. 144 districts. Here are ten stories hiding in the numbers:</p>
+<p><strong>18 years of enrollment data (2007-2024).</strong> 440,000 students. 144 districts. Here are ten stories hiding in the numbers:</p>
 <hr>
 <div class="section level3">
 <h3 id="id_1-mississippi-is-majority-black-in-many-districts">1. Mississippi is majority Black in many districts<a class="anchor" aria-label="anchor" href="#id_1-mississippi-is-majority-black-in-many-districts"></a>
@@ -67,9 +67,9 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://almartin82.github.io/msschooldata">msschooldata</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">enr_2025</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr.html">fetch_enr</a></span><span class="op">(</span><span class="fl">2025</span><span class="op">)</span></span>
+<span><span class="va">enr_2024</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr.html">fetch_enr</a></span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">enr_2025</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">enr_2024</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"black"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">pct</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>pct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">pct</span> <span class="op">*</span> <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
@@ -85,7 +85,7 @@
 </h3>
 <p>Districts in the Mississippi Delta (Coahoma, Bolivar, Sunflower, Leflore) have lost 30-50% of students since 2007.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">enr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2007</span>, <span class="fl">2012</span>, <span class="fl">2017</span>, <span class="fl">2022</span>, <span class="fl">2025</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">enr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2007</span>, <span class="fl">2012</span>, <span class="fl">2017</span>, <span class="fl">2022</span>, <span class="fl">2024</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">delta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Coahoma County"</span>, <span class="st">"Bolivar County"</span>, <span class="st">"Sunflower County"</span>, <span class="st">"Leflore County"</span><span class="op">)</span></span>
 <span></span>
@@ -131,7 +131,7 @@
 </h3>
 <p>Over 75% of Mississippi students are economically disadvantaged - the highest rate in the nation.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">enr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fl">2015</span><span class="op">:</span><span class="fl">2025</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">enr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fl">2015</span><span class="op">:</span><span class="fl">2024</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">enr</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"econ_disadv"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
@@ -175,7 +175,7 @@
 </h3>
 <p>From 2% to over 4% statewide, with some districts like Forest Municipal reaching 20%+.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">enr_2025</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">enr_2024</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"hispanic"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">pct</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>pct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">pct</span> <span class="op">*</span> <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
@@ -207,7 +207,7 @@
 </h3>
 <p>Mississippi has one of the smallest charter sectors - under 5,000 students in the entire state.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">enr_2025</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">enr_2024</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_charter</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
 <span>    total_charter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n_students</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -237,23 +237,23 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fetch one year</span></span>
-<span><span class="va">enr_2025</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr.html">fetch_enr</a></span><span class="op">(</span><span class="fl">2025</span><span class="op">)</span></span>
+<span><span class="va">enr_2024</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr.html">fetch_enr</a></span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fetch multiple years</span></span>
-<span><span class="va">enr_multi</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">:</span><span class="fl">2025</span><span class="op">)</span></span>
+<span><span class="va">enr_multi</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fl">2020</span><span class="op">:</span><span class="fl">2024</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># State totals</span></span>
-<span><span class="va">enr_2025</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">enr_2024</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Largest districts</span></span>
-<span><span class="va">enr_2025</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">enr_2024</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n_students</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">15</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Jackson demographics</span></span>
-<span><span class="va">enr_2025</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">enr_2024</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Jackson Public"</span>, <span class="va">district_name</span><span class="op">)</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
 <span>         <span class="va">subgroup</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"black"</span>, <span class="st">"hispanic"</span>, <span class="st">"asian"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subgroup</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span></code></pre></div>
@@ -268,30 +268,30 @@
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data available from </span><span class="sc">{</span>years[<span class="st">'min_year'</span>]<span class="sc">}</span><span class="ss"> to </span><span class="sc">{</span>years[<span class="st">'max_year'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co"># Fetch one year</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>enr_2025 <span class="op">=</span> ms.fetch_enr(<span class="dv">2025</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>enr_2024 <span class="op">=</span> ms.fetch_enr(<span class="dv">2024</span>)</span>
 <span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co"># Fetch multiple years</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>enr_multi <span class="op">=</span> ms.fetch_enr_multi([<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2024</span>, <span class="dv">2025</span>])</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>enr_multi <span class="op">=</span> ms.fetch_enr_multi([<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2024</span>])</span>
 <span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a></span>
 <span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co"># State totals</span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>state_total <span class="op">=</span> enr_2025[</span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>    (enr_2025[<span class="st">'is_state'</span>] <span class="op">==</span> <span class="va">True</span>) <span class="op">&amp;</span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>    (enr_2025[<span class="st">'subgroup'</span>] <span class="op">==</span> <span class="st">'total_enrollment'</span>) <span class="op">&amp;</span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>    (enr_2025[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>state_total <span class="op">=</span> enr_2024[</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>    (enr_2024[<span class="st">'is_state'</span>] <span class="op">==</span> <span class="va">True</span>) <span class="op">&amp;</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>    (enr_2024[<span class="st">'subgroup'</span>] <span class="op">==</span> <span class="st">'total_enrollment'</span>) <span class="op">&amp;</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>    (enr_2024[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>)</span>
 <span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>]</span>
 <span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a></span>
 <span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co"># Largest districts</span></span>
-<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>districts <span class="op">=</span> enr_2025[</span>
-<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>    (enr_2025[<span class="st">'is_district'</span>] <span class="op">==</span> <span class="va">True</span>) <span class="op">&amp;</span></span>
-<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a>    (enr_2025[<span class="st">'subgroup'</span>] <span class="op">==</span> <span class="st">'total_enrollment'</span>) <span class="op">&amp;</span></span>
-<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a>    (enr_2025[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>districts <span class="op">=</span> enr_2024[</span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>    (enr_2024[<span class="st">'is_district'</span>] <span class="op">==</span> <span class="va">True</span>) <span class="op">&amp;</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a>    (enr_2024[<span class="st">'subgroup'</span>] <span class="op">==</span> <span class="st">'total_enrollment'</span>) <span class="op">&amp;</span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a>    (enr_2024[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>)</span>
 <span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a>].sort_values(<span class="st">'n_students'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">15</span>)</span>
 <span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a></span>
 <span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co"># Jackson demographics</span></span>
-<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>jackson <span class="op">=</span> enr_2025[</span>
-<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a>    (enr_2025[<span class="st">'district_name'</span>].<span class="bu">str</span>.contains(<span class="st">'Jackson Public'</span>, na<span class="op">=</span><span class="va">False</span>)) <span class="op">&amp;</span></span>
-<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a>    (enr_2025[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>) <span class="op">&amp;</span></span>
-<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>    (enr_2025[<span class="st">'subgroup'</span>].isin([<span class="st">'white'</span>, <span class="st">'black'</span>, <span class="st">'hispanic'</span>, <span class="st">'asian'</span>]))</span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a>jackson <span class="op">=</span> enr_2024[</span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a>    (enr_2024[<span class="st">'district_name'</span>].<span class="bu">str</span>.contains(<span class="st">'Jackson Public'</span>, na<span class="op">=</span><span class="va">False</span>)) <span class="op">&amp;</span></span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a>    (enr_2024[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>) <span class="op">&amp;</span></span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>    (enr_2024[<span class="st">'subgroup'</span>].isin([<span class="st">'white'</span>, <span class="st">'black'</span>, <span class="st">'hispanic'</span>, <span class="st">'asian'</span>]))</span>
 <span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a>][[<span class="st">'subgroup'</span>, <span class="st">'n_students'</span>, <span class="st">'pct'</span>]]</span></code></pre></div>
 </div>
 </div>
@@ -310,7 +310,7 @@
 <th>Notes</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td><strong>2007-2025</strong></td>
+<td><strong>2007-2024</strong></td>
 <td>MDE newreports.mdek12.org</td>
 <td>Data from 2006-07 school year onwards</td>
 </tr></tbody>
