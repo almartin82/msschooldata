@@ -7,182 +7,33 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-**[Documentation](https://almartin82.github.io/msschooldata/)** | **[Getting Started](https://almartin82.github.io/msschooldata/articles/quickstart.html)**
+**[Documentation](https://almartin82.github.io/msschooldata/)** | **[Getting Started](https://almartin82.github.io/msschooldata/articles/quickstart.html)** | **[Enrollment Trends](https://almartin82.github.io/msschooldata/articles/enrollment-trends.html)**
 
 Fetch and analyze Mississippi school enrollment data from the Mississippi Department of Education (MDE) in R or Python.
 
 ## What can you find with msschooldata?
 
-**18 years of enrollment data (2007-2024).** 440,000 students. 144 districts. Here are ten stories hiding in the numbers:
+**18 years of enrollment data (2007-2024).** 440,000 students. 144 districts. Here are ten stories hiding in the numbers - see the **[Enrollment Trends vignette](https://almartin82.github.io/msschooldata/articles/enrollment-trends.html)** for interactive visualizations.
 
----
+1. **Mississippi is majority Black in many districts** - Unlike most Southern states, Mississippi has numerous majority-Black school districts, especially in the Delta region.
 
-### 1. Mississippi is majority Black in many districts
+2. **The Delta is emptying out** - Districts in the Mississippi Delta (Coahoma, Bolivar, Sunflower, Leflore) have lost 30-50% of students since 2007.
 
-Unlike most Southern states, Mississippi has numerous majority-Black school districts, especially in the Delta region.
+3. **DeSoto County: Mississippi's growth engine** - Bordering Memphis, DeSoto County has nearly doubled enrollment to become the state's second-largest district.
 
-```r
-library(msschooldata)
-library(dplyr)
+4. **Jackson Public Schools' steep decline** - Mississippi's capital city has lost over 40% of students, from 32,000 to under 20,000.
 
-enr_2024 <- fetch_enr(2024)
+5. **Economic disadvantage is nearly universal** - Over 75% of Mississippi students are economically disadvantaged - the highest rate in the nation.
 
-enr_2024 %>%
-  filter(is_district, subgroup == "black", grade_level == "TOTAL") %>%
-  arrange(desc(pct)) %>%
-  mutate(pct = round(pct * 100, 1)) %>%
-  select(district_name, n_students, pct) %>%
-  head(10)
-```
+6. **COVID hit kindergarten hard** - Mississippi lost 7% of kindergartners in 2021 and enrollment hasn't recovered.
 
-![Majority Black districts](man/figures/majority-black.png)
+7. **Madison County: A suburban success** - Madison County (north of Jackson) has grown while Jackson itself shrinks - classic suburban flight.
 
----
+8. **Hispanic population is growing** - From 2% to over 4% statewide, with some districts like Forest Municipal reaching 20%+.
 
-### 2. The Delta is emptying out
+9. **The Coast is holding steady** - Gulf Coast districts (Harrison, Jackson County, Hancock) have maintained enrollment despite hurricanes.
 
-Districts in the Mississippi Delta (Coahoma, Bolivar, Sunflower, Leflore) have lost 30-50% of students since 2007.
-
-```r
-enr <- fetch_enr_multi(c(2007, 2012, 2017, 2022, 2024))
-
-delta <- c("Coahoma County", "Bolivar County", "Sunflower County", "Leflore County")
-
-enr %>%
-  filter(is_district, grepl(paste(delta, collapse = "|"), district_name, ignore.case = TRUE),
-         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  select(end_year, district_name, n_students)
-```
-
-![Delta decline](man/figures/delta-decline.png)
-
----
-
-### 3. DeSoto County: Mississippi's growth engine
-
-Bordering Memphis, DeSoto County has nearly doubled enrollment to become the state's second-largest district.
-
-```r
-enr %>%
-  filter(is_district, grepl("DeSoto", district_name),
-         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  select(end_year, n_students)
-```
-
-![DeSoto growth](man/figures/desoto-growth.png)
-
----
-
-### 4. Jackson Public Schools' steep decline
-
-Mississippi's capital city has lost over 40% of students, from 32,000 to under 20,000.
-
-```r
-enr %>%
-  filter(is_district, grepl("Jackson Public", district_name),
-         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  select(end_year, n_students)
-```
-
-![Jackson decline](man/figures/jackson-decline.png)
-
----
-
-### 5. Economic disadvantage is nearly universal
-
-Over 75% of Mississippi students are economically disadvantaged - the highest rate in the nation.
-
-```r
-enr <- fetch_enr_multi(2015:2024)
-
-enr %>%
-  filter(is_state, subgroup == "econ_disadv", grade_level == "TOTAL") %>%
-  mutate(pct = round(pct * 100, 1)) %>%
-  select(end_year, n_students, pct)
-```
-
-![Economic disadvantage](man/figures/econ-disadvantage.png)
-
----
-
-### 6. COVID hit kindergarten hard
-
-Mississippi lost 7% of kindergartners in 2021 and enrollment hasn't recovered.
-
-```r
-enr %>%
-  filter(is_state, subgroup == "total_enrollment",
-         grade_level %in% c("K", "01", "06", "12")) %>%
-  select(end_year, grade_level, n_students)
-```
-
-![COVID kindergarten](man/figures/covid-k.png)
-
----
-
-### 7. Madison County: A suburban success
-
-Madison County (north of Jackson) has grown while Jackson itself shrinks - classic suburban flight.
-
-```r
-enr %>%
-  filter(is_district, grepl("Madison County", district_name),
-         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  select(end_year, n_students)
-```
-
-![Madison growth](man/figures/madison-growth.png)
-
----
-
-### 8. Hispanic population is growing
-
-From 2% to over 4% statewide, with some districts like Forest Municipal reaching 20%+.
-
-```r
-enr_2024 %>%
-  filter(is_district, subgroup == "hispanic", grade_level == "TOTAL") %>%
-  arrange(desc(pct)) %>%
-  mutate(pct = round(pct * 100, 1)) %>%
-  select(district_name, n_students, pct) %>%
-  head(10)
-```
-
-![Hispanic growth](man/figures/hispanic-growth.png)
-
----
-
-### 9. The Coast is holding steady
-
-Gulf Coast districts (Harrison, Jackson County, Hancock) have maintained enrollment despite hurricanes.
-
-```r
-coast <- c("Harrison County", "Jackson County", "Hancock County")
-
-enr %>%
-  filter(is_district, grepl(paste(coast, collapse = "|"), district_name),
-         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  select(end_year, district_name, n_students)
-```
-
-![Gulf Coast](man/figures/coast-stable.png)
-
----
-
-### 10. Charter schools are minimal
-
-Mississippi has one of the smallest charter sectors - under 5,000 students in the entire state.
-
-```r
-enr_2024 %>%
-  filter(is_charter, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  summarize(
-    total_charter = sum(n_students, na.rm = TRUE),
-    n_schools = n()
-  )
-```
-
-![Charter enrollment](man/figures/charter-small.png)
+10. **Charter schools are minimal** - Mississippi has one of the smallest charter sectors - under 5,000 students in the entire state.
 
 ---
 
