@@ -41,5 +41,5 @@ get_available_years <- function() {
 
   # Data Explorer shows data from 2006 onwards
   # As of late 2024, data through 2023-24 school year is available
-  2007:2025
+  2007:2024
 }

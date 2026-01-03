@@ -13,7 +13,7 @@
 #' of Education data portal at newreports.mdek12.org.
 #'
 #' @param end_year A school year. Year is the end of the academic year - eg 2023-24
-#'   school year is year '2024'. Valid values are 2007-2025 (data available from
+#'   school year is year '2024'. Valid values are 2007-2024 (data available from
 #'   2006-07 school year onwards).
 #' @param tidy If TRUE (default), returns data in long (tidy) format with subgroup
 #'   column. If FALSE, returns wide format.
