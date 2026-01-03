@@ -4,9 +4,9 @@
 \name{msschooldata-package}
 \alias{msschooldata-package}
 \alias{msschooldata}
-\title{msschooldata: Fetch and Process Mississippi School Data}
+\title{msschooldata: Mississippi School Data}
 \description{
-Downloads and processes school data from the Mississippi Department of Education (MDE). Provides functions for fetching enrollment data from the MDE reporting system and transforming it into tidy format for analysis. Data is sourced from the Mississippi Student Information System (MSIS) and includes enrollment counts by grade, race/ethnicity, gender, and special populations from 2006 to present.
+A simple, consistent interface for accessing Mississippi school data in Python and R.
 
 The msschooldata package provides functions for downloading, processing,
 and analyzing school enrollment data from the Mississippi Department of
@@ -52,6 +52,7 @@ to remove them.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://almartin82.github.io/msschooldata}
   \item \url{https://github.com/almartin82/msschooldata}
   \item Report bugs at \url{https://github.com/almartin82/msschooldata/issues}
 }
@@ -59,6 +60,7 @@ Useful links:
 
 Useful links:
 \itemize{
+  \item \url{https://almartin82.github.io/msschooldata}
   \item \url{https://github.com/almartin82/msschooldata}
   \item Report bugs at \url{https://github.com/almartin82/msschooldata/issues}
 }
