@@ -1,0 +1,285 @@
+# Mississippi Enrollment Trends
+
+``` r
+library(msschooldata)
+library(ggplot2)
+library(dplyr)
+library(scales)
+```
+
+``` r
+theme_readme <- function() {
+  theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(face = "bold", size = 16),
+      plot.subtitle = element_text(color = "gray40"),
+      panel.grid.minor = element_blank(),
+      legend.position = "bottom"
+    )
+}
+
+colors <- c("total" = "#2C3E50", "white" = "#3498DB", "black" = "#E74C3C",
+            "hispanic" = "#F39C12", "asian" = "#9B59B6")
+```
+
+``` r
+# Get available years
+years <- get_available_years()
+if (is.list(years)) {
+  max_year <- years$max_year
+  min_year <- years$min_year
+} else {
+  max_year <- max(years)
+  min_year <- min(years)
+}
+
+# Fetch data with error handling for CI environments
+enr <- tryCatch({
+  fetch_enr_multi((max_year - 9):max_year)
+}, error = function(e) {
+  message("Note: Could not fetch enrollment data - ", e$message)
+  NULL
+})
+
+key_years <- seq(max(min_year, 2007), max_year, by = 5)
+if (!max_year %in% key_years) key_years <- c(key_years, max_year)
+
+enr_long <- tryCatch({
+  fetch_enr_multi(key_years)
+}, error = function(e) NULL)
+
+enr_current <- tryCatch({
+  fetch_enr(max_year)
+}, error = function(e) NULL)
+
+# Check if we have data
+has_data <- !is.null(enr) && nrow(enr) > 0
+```
+
+## 1. Mississippi is majority Black in many districts
+
+Unlike most Southern states, Mississippi has numerous majority-Black
+school districts, especially in the Delta region.
+
+``` r
+black <- enr_current %>%
+  filter(is_district, subgroup == "black", grade_level == "TOTAL") %>%
+  arrange(desc(pct)) %>%
+  head(10) %>%
+  mutate(district_label = reorder(district_name, pct))
+
+ggplot(black, aes(x = district_label, y = pct * 100)) +
+  geom_col(fill = colors["black"]) +
+  coord_flip() +
+  labs(title = "Mississippi Has Many Majority-Black Districts",
+       subtitle = "Especially in the Delta region",
+       x = "", y = "Percent Black Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/majority-black-1.png)
+
+## 2. The Delta is emptying out
+
+Districts in the Mississippi Delta have lost 30-50% of students since
+2007.
+
+``` r
+delta <- c("Coahoma County", "Bolivar County", "Sunflower County", "Leflore County")
+delta_trend <- enr_long %>%
+  filter(is_district, grepl(paste(delta, collapse = "|"), district_name, ignore.case = TRUE),
+         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
+  group_by(end_year) %>%
+  summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
+
+ggplot(delta_trend, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma) +
+  labs(title = "The Delta is Emptying Out",
+       subtitle = "Coahoma, Bolivar, Sunflower, Leflore counties combined",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/delta-decline-1.png)
+
+## 3. DeSoto County: Mississippi’s growth engine
+
+Bordering Memphis, DeSoto County has nearly doubled enrollment.
+
+``` r
+desoto <- enr %>%
+  filter(is_district, grepl("DeSoto", district_name, ignore.case = TRUE),
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(desoto, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "DeSoto County: Mississippi's Growth Engine",
+       subtitle = "Memphis suburb nearly doubled enrollment",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/desoto-growth-1.png)
+
+## 4. Jackson Public Schools’ steep decline
+
+Mississippi’s capital city has lost over 40% of students.
+
+``` r
+jackson <- enr %>%
+  filter(is_district, grepl("Jackson Public", district_name, ignore.case = TRUE),
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(jackson, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "Jackson Public Schools' Steep Decline",
+       subtitle = "Capital city lost over 40% of students",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/jackson-decline-1.png)
+
+## 5. Economic disadvantage is nearly universal
+
+Over 75% of Mississippi students are economically disadvantaged - the
+highest rate in the nation.
+
+``` r
+econ <- enr %>%
+  filter(is_state, subgroup == "econ_disadv", grade_level == "TOTAL")
+
+ggplot(econ, aes(x = end_year, y = pct * 100)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  labs(title = "Economic Disadvantage is Nearly Universal",
+       subtitle = "Over 75% of Mississippi students - highest in the nation",
+       x = "School Year", y = "Percent Economically Disadvantaged") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/econ-disadvantage-1.png)
+
+## 6. COVID hit kindergarten hard
+
+Mississippi lost 7% of kindergartners in 2021 and enrollment hasn’t
+recovered.
+
+``` r
+k_trend <- enr %>%
+  filter(is_state, subgroup == "total_enrollment",
+         grade_level %in% c("K", "01", "06", "12")) %>%
+  mutate(grade_label = case_when(
+    grade_level == "K" ~ "Kindergarten",
+    grade_level == "01" ~ "Grade 1",
+    grade_level == "06" ~ "Grade 6",
+    grade_level == "12" ~ "Grade 12"
+  ))
+
+ggplot(k_trend, aes(x = end_year, y = n_students, color = grade_label)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.5) +
+  geom_vline(xintercept = 2021, linetype = "dashed", color = "red", alpha = 0.5) +
+  scale_y_continuous(labels = comma) +
+  labs(title = "COVID Hit Mississippi Kindergarten Hard",
+       subtitle = "Lost 7% of kindergartners and hasn't recovered",
+       x = "School Year", y = "Students", color = "") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/covid-k-1.png)
+
+## 7. Madison County: Suburban success
+
+Madison County has grown while Jackson shrinks - classic suburban
+flight.
+
+``` r
+madison <- enr %>%
+  filter(is_district, grepl("Madison County", district_name, ignore.case = TRUE),
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(madison, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "Madison County: Suburban Success",
+       subtitle = "Growing while Jackson shrinks - classic suburban flight",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/madison-growth-1.png)
+
+## 8. Hispanic population is growing
+
+From 2% to over 4% statewide, with some districts like Forest Municipal
+reaching 20%+.
+
+``` r
+hispanic <- enr_current %>%
+  filter(is_district, subgroup == "hispanic", grade_level == "TOTAL") %>%
+  arrange(desc(pct)) %>%
+  head(10) %>%
+  mutate(district_label = reorder(district_name, pct))
+
+ggplot(hispanic, aes(x = district_label, y = pct * 100)) +
+  geom_col(fill = colors["hispanic"]) +
+  coord_flip() +
+  labs(title = "Hispanic Population Growing",
+       subtitle = "Some districts like Forest Municipal reaching 20%+",
+       x = "", y = "Percent Hispanic Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/hispanic-growth-1.png)
+
+## 9. The Coast is holding steady
+
+Gulf Coast districts have maintained enrollment despite hurricanes.
+
+``` r
+coast <- c("Harrison County", "Jackson County", "Hancock County")
+coast_trend <- enr %>%
+  filter(is_district, grepl(paste(coast, collapse = "|"), district_name, ignore.case = TRUE),
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(coast_trend, aes(x = end_year, y = n_students, color = district_name)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.5) +
+  scale_y_continuous(labels = comma) +
+  labs(title = "The Coast is Holding Steady",
+       subtitle = "Gulf Coast districts maintained enrollment despite hurricanes",
+       x = "School Year", y = "Students", color = "") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/coast-stable-1.png)
+
+## 10. Charter schools are minimal
+
+Mississippi has one of the smallest charter sectors in the nation.
+
+``` r
+charter <- enr %>%
+  filter(is_charter, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
+  group_by(end_year) %>%
+  summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
+
+ggplot(charter, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "Charter Schools are Minimal",
+       subtitle = "Under 5,000 students - one of smallest sectors in the nation",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/charter-small-1.png)

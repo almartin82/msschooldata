@@ -1,11 +1,7 @@
-# msschooldata: Fetch and Process Mississippi School Data
+# msschooldata: Mississippi School Data
 
-Downloads and processes school data from the Mississippi Department of
-Education (MDE). Provides functions for fetching enrollment data from
-the MDE reporting system and transforming it into tidy format for
-analysis. Data is sourced from the Mississippi Student Information
-System (MSIS) and includes enrollment counts by grade, race/ethnicity,
-gender, and special populations from 2006 to present.
+A simple, consistent interface for accessing Mississippi school data in
+Python and R.
 
 The msschooldata package provides functions for downloading, processing,
 and analyzing school enrollment data from the Mississippi Department of
@@ -62,11 +58,15 @@ to remove them.
 
 Useful links:
 
+- <https://almartin82.github.io/msschooldata>
+
 - <https://github.com/almartin82/msschooldata>
 
 - Report bugs at <https://github.com/almartin82/msschooldata/issues>
 
 Useful links:
+
+- <https://almartin82.github.io/msschooldata>
 
 - <https://github.com/almartin82/msschooldata>
 

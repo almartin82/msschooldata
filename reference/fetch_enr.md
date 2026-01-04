@@ -48,7 +48,7 @@ enr_wide <- fetch_enr(2024, tidy = FALSE)
 enr_fresh <- fetch_enr(2024, use_cache = FALSE)
 
 # Filter to specific district
-jackson <- enr_2024 %>%
+jackson <- enr_2024 |>
   dplyr::filter(district_name == "JACKSON PUBLIC SCHOOL DIST")
 } # }
 ```
