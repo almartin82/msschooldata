@@ -52,9 +52,18 @@ get_raw_enr <- function(end_year) {
   message("  Downloading district data...")
   district_data <- download_mde_enrollment(end_year, level = "district")
 
-  # Add end_year column
-  school_data$end_year <- end_year
-  district_data$end_year <- end_year
+  # Add end_year column (only if data has rows)
+  if (nrow(school_data) > 0) {
+    school_data$end_year <- end_year
+  } else {
+    school_data <- cbind(school_data, data.frame(end_year = integer(0)))
+  }
+
+  if (nrow(district_data) > 0) {
+    district_data$end_year <- end_year
+  } else {
+    district_data <- cbind(district_data, data.frame(end_year = integer(0)))
+  }
 
   list(
     school = school_data,
