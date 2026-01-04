@@ -101,7 +101,9 @@ test_that("fetch_enr downloads and processes data", {
   )
 
   # Skip if download failed (network issues, API changes, etc.)
+  # Note: fetch_enr returns a state-only row when API fails, so check for actual data
   skip_if(is.null(result), "Could not download data from MDE")
+  skip_if(nrow(result) <= 1, "MDE API unavailable - only placeholder data returned")
 
   # Check structure
   expect_true(is.data.frame(result))
@@ -126,6 +128,7 @@ test_that("tidy_enr produces correct long format", {
   )
 
   skip_if(is.null(wide), "Could not download data from MDE")
+  skip_if(nrow(wide) <= 1, "MDE API unavailable - only placeholder data returned")
 
   # Tidy it
   tidy_result <- tidy_enr(wide)
@@ -152,16 +155,19 @@ test_that("id_enr_aggs adds correct flags", {
   )
 
   skip_if(is.null(result), "Could not download data from MDE")
+  skip_if(nrow(result) <= 1, "MDE API unavailable - only placeholder data returned")
 
   # Check flags exist
   expect_true("is_state" %in% names(result))
   expect_true("is_district" %in% names(result))
   expect_true("is_school" %in% names(result))
+  expect_true("is_charter" %in% names(result))
 
   # Check flags are boolean
   expect_true(is.logical(result$is_state))
   expect_true(is.logical(result$is_district))
   expect_true(is.logical(result$is_school))
+  expect_true(is.logical(result$is_charter))
 
   # Check mutual exclusivity (each row is only one type)
   type_sums <- result$is_state + result$is_district + result$is_school

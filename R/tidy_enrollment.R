@@ -134,18 +134,26 @@ tidy_enr <- function(df) {
 
 #' Identify enrollment aggregation levels
 #'
-#' Adds boolean flags to identify state, district, and school level records.
+#' Adds boolean flags to identify state, district, school, and charter records.
 #'
 #' @param df Enrollment dataframe, output of tidy_enr
-#' @return data.frame with boolean aggregation flags
+#' @return data.frame with boolean aggregation flags (is_state, is_district,
+#'   is_school, is_campus, is_charter)
 #' @export
 #' @examples
 #' \dontrun{
 #' tidy_data <- fetch_enr(2024)
 #' # Data already has aggregation flags via id_enr_aggs
 #' table(tidy_data$is_state, tidy_data$is_district, tidy_data$is_school)
+#' # Charter schools are identified by name pattern
+#' sum(tidy_data$is_charter)
 #' }
 id_enr_aggs <- function(df) {
+
+  # Mississippi charter schools are identified by "Charter" in the district name
+  # MS has very few charter schools (under 5,000 students statewide)
+  charter_pattern <- "charter"
+
   df |>
     dplyr::mutate(
       # State level: Type == "State"
@@ -158,7 +166,11 @@ id_enr_aggs <- function(df) {
       is_school = type == "School",
 
       # For compatibility with other state packages
-      is_campus = type == "School"
+      is_campus = type == "School",
+
+      # Charter identification based on district name pattern
+      is_charter = grepl(charter_pattern, district_name, ignore.case = TRUE) |
+        grepl(charter_pattern, school_name, ignore.case = TRUE)
     )
 }
 
@@ -183,7 +195,7 @@ enr_grade_aggs <- function(df) {
     "district_id", "school_id", "campus_id",
     "district_name", "school_name", "campus_name",
     "subgroup",
-    "is_state", "is_district", "is_school", "is_campus"
+    "is_state", "is_district", "is_school", "is_campus", "is_charter"
   )
   group_vars <- group_vars[group_vars %in% names(df)]
 
