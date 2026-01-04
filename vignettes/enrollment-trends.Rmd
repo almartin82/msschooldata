@@ -176,7 +176,7 @@ ggplot(econ, aes(x = end_year, y = pct * 100)) +
 
 Mississippi lost 7% of kindergartners in 2021 and enrollment hasn't recovered.
 
-```{r covid-k}
+```{r covid-k, eval=has_data}
 k_trend <- enr %>%
   filter(is_state, subgroup == "total_enrollment",
          grade_level %in% c("K", "01", "06", "12")) %>%
@@ -202,7 +202,7 @@ ggplot(k_trend, aes(x = end_year, y = n_students, color = grade_label)) +
 
 Madison County has grown while Jackson shrinks - classic suburban flight.
 
-```{r madison-growth}
+```{r madison-growth, eval=has_data}
 madison <- enr %>%
   filter(is_district, grepl("Madison County", district_name, ignore.case = TRUE),
          subgroup == "total_enrollment", grade_level == "TOTAL")
@@ -221,7 +221,7 @@ ggplot(madison, aes(x = end_year, y = n_students)) +
 
 From 2% to over 4% statewide, with some districts like Forest Municipal reaching 20%+.
 
-```{r hispanic-growth}
+```{r hispanic-growth, eval=has_data}
 hispanic <- enr_current %>%
   filter(is_district, subgroup == "hispanic", grade_level == "TOTAL") %>%
   arrange(desc(pct)) %>%
@@ -241,7 +241,7 @@ ggplot(hispanic, aes(x = district_label, y = pct * 100)) +
 
 Gulf Coast districts have maintained enrollment despite hurricanes.
 
-```{r coast-stable}
+```{r coast-stable, eval=has_data}
 coast <- c("Harrison County", "Jackson County", "Hancock County")
 coast_trend <- enr %>%
   filter(is_district, grepl(paste(coast, collapse = "|"), district_name, ignore.case = TRUE),
@@ -261,7 +261,7 @@ ggplot(coast_trend, aes(x = end_year, y = n_students, color = district_name)) +
 
 Mississippi has one of the smallest charter sectors in the nation.
 
-```{r charter-small}
+```{r charter-small, eval=has_data}
 charter <- enr %>%
   filter(is_charter, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   group_by(end_year) %>%
