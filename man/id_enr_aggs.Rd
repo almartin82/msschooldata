@@ -10,15 +10,18 @@ id_enr_aggs(df)
 \item{df}{Enrollment dataframe, output of tidy_enr}
 }
 \value{
-data.frame with boolean aggregation flags
+data.frame with boolean aggregation flags (is_state, is_district,
+is_school, is_campus, is_charter)
 }
 \description{
-Adds boolean flags to identify state, district, and school level records.
+Adds boolean flags to identify state, district, school, and charter records.
 }
 \examples{
 \dontrun{
 tidy_data <- fetch_enr(2024)
 # Data already has aggregation flags via id_enr_aggs
 table(tidy_data$is_state, tidy_data$is_district, tidy_data$is_school)
+# Charter schools are identified by name pattern
+sum(tidy_data$is_charter)
 }
 }
