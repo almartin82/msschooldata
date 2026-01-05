@@ -259,20 +259,6 @@ ggplot(coast_trend, aes(x = end_year, y = n_students, color = district_name)) +
 
 ## 10. Charter schools are minimal
 
-Mississippi has one of the smallest charter sectors in the nation.
+Mississippi has one of the smallest charter sectors in the nation, with fewer than 5,000 students enrolled across all charter schools.
 
-```{r charter-small, eval=has_data}
-charter <- enr %>%
-  filter(is_charter, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  group_by(end_year) %>%
-  summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
-
-ggplot(charter, aes(x = end_year, y = n_students)) +
-  geom_line(linewidth = 1.5, color = colors["total"]) +
-  geom_point(size = 3, color = colors["total"]) +
-  scale_y_continuous(labels = comma, limits = c(0, NA)) +
-  labs(title = "Charter Schools are Minimal",
-       subtitle = "Under 5,000 students - one of smallest sectors in the nation",
-       x = "School Year", y = "Students") +
-  theme_readme()
-```
+*Note: Charter school enrollment tracking is not yet implemented in this package. The MDE data portal does not currently distinguish charter schools as a separate entity type.*
