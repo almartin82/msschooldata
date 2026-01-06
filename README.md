@@ -1,9 +1,9 @@
 # msschooldata
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/almartin82/msschooldata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/almartin82/msschooldata/actions/workflows/R-CMD-check.yaml)
-[![Python Tests](https://github.com/almartin82/msschooldata/actions/workflows/python-test.yaml/badge.svg)](https://github.com/almartin82/msschooldata/actions/workflows/python-test.yaml)
-[![pkgdown](https://github.com/almartin82/msschooldata/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/almartin82/msschooldata/actions/workflows/pkgdown.yaml)
+[![R-CMD-check](https://img.shields.io/github/actions/workflow/status/almartin82/msschooldata/R-CMD-check.yaml?branch=main)](https://github.com/almartin82/msschooldata/actions/workflows/R-CMD-check.yaml)
+[![Python Tests](https://img.shields.io/github/actions/workflow/status/almartin82/msschooldata/python-test.yaml?branch=main)](https://github.com/almartin82/msschooldata/actions/workflows/python-test.yaml)
+[![pkgdown](https://img.shields.io/github/actions/workflow/status/almartin82/msschooldata/pkgdown.yaml?branch=main)](https://github.com/almartin82/msschooldata/actions/workflows/pkgdown.yaml)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
