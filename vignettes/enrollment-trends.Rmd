@@ -54,7 +54,7 @@ if (is.list(years)) {
 
 # Fetch data with error handling for CI environments
 enr <- tryCatch({
-  fetch_enr_multi((max_year - 9, use_cache = TRUE):max_year)
+  fetch_enr_multi((max_year - 9):max_year, use_cache = TRUE)
 }, error = function(e) {
   message("Note: Could not fetch enrollment data - ", e$message)
   NULL
