@@ -263,3 +263,9 @@ ggplot(coast_trend, aes(x = end_year, y = n_students, color = district_name)) +
 Mississippi has one of the smallest charter sectors in the nation, with fewer than 5,000 students enrolled across all charter schools.
 
 *Note: Charter school enrollment tracking is not yet implemented in this package. The MDE data portal does not currently distinguish charter schools as a separate entity type.*
+
+## Session Info
+
+```{r session-info}
+sessionInfo()
+```
