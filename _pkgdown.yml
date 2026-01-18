@@ -48,6 +48,18 @@ reference:
     contents:
       - starts_with("%")
 
+articles:
+  - title: "Getting Started"
+    navbar: ~
+    contents:
+      - enrollment-trends
+  - title: internal
+    contents:
+      - starts_with("CLAUDE")
+      - starts_with("EXPANSION")
+      - starts_with("TODO")
+      - starts_with("PRD")
+
 home:
   title: "msschooldata: Mississippi School Enrollment Data"
   description: >

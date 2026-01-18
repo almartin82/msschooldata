@@ -13,3 +13,4 @@
 ^\.gitignore$
 ^py.*schooldata$
 ^vignettes/.*_cache$
+^research$
