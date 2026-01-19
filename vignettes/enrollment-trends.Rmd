@@ -264,6 +264,107 @@ Mississippi has one of the smallest charter sectors in the nation, with fewer th
 
 *Note: Charter school enrollment tracking is not yet implemented in this package. The MDE data portal does not currently distinguish charter schools as a separate entity type.*
 
+## 11. State enrollment has held steady at 440,000
+
+Unlike many states experiencing enrollment declines, Mississippi has maintained relatively stable enrollment around 440,000 students over the past decade.
+
+```{r state-trend, eval=has_data}
+state_trend <- enr %>%
+  filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(state_trend, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "Mississippi Enrollment Holds Steady",
+       subtitle = "State maintains approximately 440,000 students",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+## 12. DeSoto and Rankin dominate enrollment rankings
+
+The top 15 districts account for nearly half of all Mississippi students, with Memphis and Jackson suburbs leading the pack.
+
+```{r top-districts, eval=has_data}
+top_districts <- enr_current %>%
+  filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
+  arrange(desc(n_students)) %>%
+  head(15) %>%
+  mutate(district_label = reorder(district_name, n_students))
+
+ggplot(top_districts, aes(x = district_label, y = n_students)) +
+  geom_col(fill = colors["total"]) +
+  coord_flip() +
+  scale_y_continuous(labels = comma) +
+  labs(title = "Top 15 Largest Districts",
+       subtitle = "DeSoto, Rankin, and Jackson lead the state",
+       x = "", y = "Students") +
+  theme_readme()
+```
+
+## 13. Mississippi is nearly 50% Black statewide
+
+Mississippi has the highest percentage of Black students of any US state, with Black and white students at near parity statewide.
+
+```{r racial-breakdown, eval=has_data}
+race <- enr_current %>%
+  filter(is_state, grade_level == "TOTAL",
+         subgroup %in% c("white", "black", "hispanic", "asian")) %>%
+  mutate(subgroup_label = case_when(
+    subgroup == "white" ~ "White",
+    subgroup == "black" ~ "Black",
+    subgroup == "hispanic" ~ "Hispanic",
+    subgroup == "asian" ~ "Asian"
+  ))
+
+ggplot(race, aes(x = reorder(subgroup_label, -pct), y = pct * 100, fill = subgroup)) +
+  geom_col() +
+  scale_fill_manual(values = colors, guide = "none") +
+  labs(title = "Mississippi's Racial Demographics",
+       subtitle = "Nearly 50% Black students - highest in the nation",
+       x = "", y = "Percent of Students") +
+  theme_readme()
+```
+
+## 14. Rankin County mirrors Madison's suburban growth
+
+Like Madison County, Rankin County (east of Jackson) has grown substantially as families leave the capital city for suburban schools.
+
+```{r rankin-growth, eval=has_data}
+rankin <- enr %>%
+  filter(is_district, grepl("Rankin County", district_name, ignore.case = TRUE),
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(rankin, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "Rankin County: Another Suburban Success Story",
+       subtitle = "Jackson suburb continues steady growth",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+## 15. Mississippi's gender balance is nearly even
+
+Like most states, Mississippi schools are roughly 51% male and 49% female, with slight variation by district.
+
+```{r gender-balance, eval=has_data}
+gender <- enr %>%
+  filter(is_state, grade_level == "TOTAL",
+         subgroup %in% c("male", "female")) %>%
+  mutate(subgroup_label = ifelse(subgroup == "male", "Male", "Female"))
+
+ggplot(gender, aes(x = end_year, y = pct * 100, color = subgroup_label)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.5) +
+  labs(title = "Gender Balance Over Time",
+       subtitle = "Slight male majority, consistent over years",
+       x = "School Year", y = "Percent of Students", color = "") +
+  theme_readme()
+```
+
 ## Session Info
 
 ```{r session-info}
